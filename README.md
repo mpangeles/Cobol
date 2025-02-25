@@ -99,5 +99,25 @@ resChar = "HHeelllloo"
 
 👉 Este programa duplica cada carácter de una cadena y la almacena en otra variable.👉 Está diseñado para ser llamado desde otro programa, gracias a la LINKAGE SECTION.👉 Usa arrays dinámicos con OCCURS ... DEPENDING ON.👉 Eficiente y claro, usando PERFORM VARYING para recorrer la cadena.
 
+Entrada (s):
+
+sLen = 5
+sChar = "Hello"
+
+Proceso:
+
+resLen = sLen * 2 = 10
+
+resChar = "HHeelllloo"
+
+Salida (result):
+
+resLen = 10
+resChar = "HHeelllloo"
+
+👉 Conclusión
+
+👉 Este programa duplica cada carácter de una cadena y la almacena en otra variable.👉 Está diseñado para ser llamado desde otro programa, gracias a la LINKAGE SECTION.👉 Usa arrays dinámicos con OCCURS ... DEPENDING ON.👉 Eficiente y claro, usando PERFORM VARYING para recorrer la cadena.
+
 
 

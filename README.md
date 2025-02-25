@@ -1,4 +1,5 @@
 "# Cobol" 
+Programa Caracteres Duplicados
 Este código en COBOL define un programa llamado Doublechar, que toma una cadena de entrada (s) y devuelve otra (result) en la que cada carácter se repite dos veces.
 
 👉 IDENTIFICATION DIVISION
@@ -97,4 +98,6 @@ resChar = "HHeelllloo"
 👉 Conclusión
 
 👉 Este programa duplica cada carácter de una cadena y la almacena en otra variable.👉 Está diseñado para ser llamado desde otro programa, gracias a la LINKAGE SECTION.👉 Usa arrays dinámicos con OCCURS ... DEPENDING ON.👉 Eficiente y claro, usando PERFORM VARYING para recorrer la cadena.
+
+
 

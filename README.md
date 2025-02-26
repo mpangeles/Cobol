@@ -1,118 +1,142 @@
 "# Cobol" 
 Programa Caracteres Duplicados
-Este código en COBOL define un programa llamado Doublechar, que toma una cadena de entrada (s) y devuelve otra (result) en la que cada carácter se repite dos veces.
+Este código en COBOL toma una cadena (`MI-CADENA`), **duplica cada uno de sus caracteres** y almacena el resultado en `RESULTADO`. Finalmente, muestra la nueva cadena con los caracteres duplicados.  
+
+---
 
 ## IDENTIFICATION DIVISION
+Define el nombre del programa:
 ```cobol
 IDENTIFICATION DIVISION.
-PROGRAM-ID. Doublechar.
+PROGRAM-ID. DuplicarCaracteres.
+```
 
-Define el nombre del programa como Doublechar.
+---
 
 ## DATA DIVISION
+Aquí se declaran las variables que se utilizarán en el programa.
 
-La DATA DIVISION contiene la estructura de los datos usados en el programa.
+### Definición de variables
 ```cobol
-LINKAGE SECTION.
-01  s.
-    03  sLen         PIC 9(2).
-    03  sChar        PIC X
-        OCCURS 0 TO 30 TIMES DEPENDING ON sLen INDEXED i.
-01  result.
-    03  resLen       PIC 9(2).
-    03  resChar      PIC X
-        OCCURS 0 TO 60 TIMES DEPENDING ON resLen.
+01 MI-CADENA       PIC X(20) VALUE 'Hello World'.
+```
+- `MI-CADENA`: Contiene la cadena original con un máximo de **20 caracteres**.
 
-## Explicación de la LINKAGE SECTION
+```cobol
+01 LONGITUD        PIC 9(02).
+```
+- `LONGITUD`: Almacena la **longitud real** de `MI-CADENA`.
 
-La LINKAGE SECTION se usa cuando el programa recibe datos externos, por ejemplo, desde otro programa o subprograma.
+```cobol
+01 INDICE          PIC 9(02) VALUE 1.
+```
+- `INDICE`: Se usa como **contador** para recorrer la cadena original.
 
-## Estructura de s (entrada)
+```cobol
+01 RESULTADO       PIC X(40) VALUE SPACES.
+```
+- `RESULTADO`: Almacena la nueva cadena con los caracteres **duplicados**. Tiene el doble del tamaño de `MI-CADENA` (hasta 40 caracteres).
 
-sLen: Guarda la longitud de la cadena original (s).
+```cobol
+01 POS-RES         PIC 9(02) VALUE 1.
+```
+- `POS-RES`: Indica la **posición actual** dentro de `RESULTADO`.
 
-sChar: Es un array de caracteres que puede contener hasta 30 caracteres, dependiendo del valor de sLen.
+```cobol
+01 CARACTER        PIC X.
+```
+- `CARACTER`: Variable temporal para almacenar un carácter individual.
 
-INDEXED i: Permite usar i como índice en los bucles.
-
-## Estructura de result (salida)
-
-resLen: Guarda la longitud de la nueva cadena (el doble de sLen).
-
-resChar: Es un array que almacena la nueva cadena con caracteres duplicados, de hasta 60 caracteres (2 * sLen).
+---
 
 ## PROCEDURE DIVISION
+Define la lógica del programa.
 
-PROCEDURE DIVISION USING s result.
-
-El programa usa (USING) las variables s y result, lo que indica que este código está diseñado como un subprograma llamado por otro programa principal.
-
-INITIALIZE result
-
-Limpia (resLen y resChar), asegurando que no haya valores residuales.
-
-DISPLAY 'sLen: ' sLen.
-MULTIPLY sLen BY 2 GIVING resLen
-DISPLAY 'rLen: ' resLen.
-
-Muestra el tamaño original de sLen.
-
-Calcula la nueva longitud duplicándola (resLen = sLen * 2).
-
-Muestra la nueva longitud (resLen).
+### Obtener la longitud de la cadena original
 ```cobol
-PERFORM VARYING i FROM 1 UNTIL i > sLen
-    MOVE sChar(i) TO resChar(2 * i - 1) resChar(2 * i)
-END-PERFORM.
+MOVE FUNCTION LENGTH(MI-CADENA) TO LONGITUD.
+```
+- La función `LENGTH(MI-CADENA)` obtiene la **cantidad de caracteres** de la cadena y la almacena en `LONGITUD`.
 
-Usa un bucle PERFORM VARYING para recorrer cada carácter de sChar.
+### Duplicar caracteres usando un bucle
+```cobol
+PERFORM VARYING INDICE FROM 1 BY 1 UNTIL INDICE > LONGITUD
+```
+- Un **bucle** que recorre `MI-CADENA` desde el **índice 1** hasta `LONGITUD`.
 
-Copia cada carácter dos veces en resChar:
+Dentro del bucle:
+```cobol
+MOVE MI-CADENA(INDICE:1) TO CARACTER
+```
+- Toma **un carácter** de `MI-CADENA` en la posición `INDICE` y lo guarda en `CARACTER`.
 
-resChar(2 * i - 1): Primera copia del carácter original.
+```cobol
+MOVE CARACTER TO RESULTADO(POS-RES:1)
+ADD 1 TO POS-RES
+```
+- Mueve el **carácter original** a `RESULTADO` en la posición actual.
+- Aumenta `POS-RES` en **1** para la siguiente posición.
 
-resChar(2 * i): Segunda copia del carácter original.
+```cobol
+MOVE CARACTER TO RESULTADO(POS-RES:1)
+ADD 1 TO POS-RES
+```
+- Vuelve a mover el **mismo carácter** a `RESULTADO` (lo **duplica**).
+- Aumenta `POS-RES` en **1** nuevamente.
 
-GOBACK.
+El bucle continúa hasta recorrer toda la cadena original.
 
-Finaliza la ejecución y devuelve el control al programa que lo llamó.
+---
+
+## Mostrar el resultado
+```cobol
+DISPLAY 'Resultado: ' RESULTADO.
+```
+- Muestra la nueva cadena con los caracteres **duplicados**.
+
+```cobol
+STOP RUN.
+```
+- Finaliza el programa.
+
+---
 
 ## Ejemplo de Ejecución
 
-Entrada (s):
+### Entrada:
+```cobol
+MI-CADENA = "Hello World"
+```
 
-sLen = 5
-sChar = "Hello"
+### Proceso:
+Cada carácter se duplica:
+```
+H -> HH
+e -> ee
+l -> ll
+l -> ll
+o -> oo
+(space) -> (space)(space)
+W -> WW
+o -> oo
+r -> rr
+l -> ll
+d -> dd
+```
 
-Proceso:
+### Salida:
+```
+Resultado: HHeelllloo  WWoorrlldd
+```
 
-resLen = sLen * 2 = 10
+---
 
-resChar = "HHeelllloo"
+## Resumen
+✅ **Toma una cadena y duplica cada uno de sus caracteres.**  
+✅ **Utiliza un bucle `PERFORM` para recorrer la cadena.**  
+✅ **Usa `FUNCTION LENGTH()` para calcular la longitud de la cadena.**  
 
-Salida (result):
-
-resLen = 10
-resChar = "HHeelllloo"
-
-## Conclusión
-
-
-Entrada (s):
-
-sLen = 5
-sChar = "Hello"
-
-Proceso:
-
-resLen = sLen * 2 = 10
-
-resChar = "HHeelllloo"
-
-Salida (result):
-
-resLen = 10
-resChar = "HHeelllloo"
+Si necesitas modificarlo o entender algún detalle más, dime. 😊
 
 
 

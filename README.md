@@ -121,7 +121,7 @@ resChar = "HHeelllloo"
 
 
 
-
+## RemoveChar
 Este código está escrito en COBOL y define un programa llamado `removeChar`. Su propósito es eliminar los dos primeros caracteres de una cadena de entrada (`str`) y almacenar el resultado en `result`.
 
 ---

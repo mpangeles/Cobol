@@ -121,3 +121,104 @@ resChar = "HHeelllloo"
 
 
 
+
+Este código está escrito en COBOL y define un programa llamado `removeChar`. Su propósito es eliminar los dos primeros caracteres de una cadena de entrada (`str`) y almacenar el resultado en `result`.
+
+---
+
+## IDENTIFICATION DIVISION
+Define el nombre del programa:
+```cobol
+       identification division.
+       program-id. removeChar.
+```
+
+---
+
+## DATA DIVISION
+Define las variables que se utilizarán en el programa.
+
+### LINKAGE SECTION
+Contiene las variables que se recibirán como parámetros cuando se llame al programa.
+
+#### Definición de la variable `str` (Entrada)
+```cobol
+       01  str.
+           05 s-length     pic 9(2).
+           05 s-char       pic x occurs 2 to 20 times
+                                  depending on s-length.
+```
+- `s-length`: Indica la longitud de la cadena `s-char`.
+- `s-char`: Es un **arreglo de caracteres** con un tamaño de **2 a 20**, según el valor de `s-length`.
+
+#### Definición de la variable `result` (Salida)
+```cobol
+       01  result.
+           05 res-length   pic 9(2).
+           05 res          pic x occurs 0 to 20 times
+                                 depending on res-length.
+```
+- `res-length`: Guardará la longitud del resultado (después de eliminar los 2 primeros caracteres).
+- `res`: Contendrá la nueva cadena sin los dos primeros caracteres.
+
+---
+
+## PROCEDURE DIVISION
+Define la lógica del programa:
+```cobol
+       procedure division using str result.
+```
+Indica que el programa recibe `str` como entrada y devuelve `result` como salida.
+
+```cobol
+       initialize result
+```
+Inicializa `result`, asegurando que todos los valores se establezcan en cero o espacios en blanco.
+
+```cobol
+       compute res-length = s-length - 2
+```
+Calcula la nueva longitud de la cadena después de eliminar los dos primeros caracteres.
+
+```cobol
+       move str(4:) to result(3:)
+```
+Esta línea intenta mover los caracteres desde la **posición 4 en adelante** de `str` hacia la posición **3 en adelante** de `result`.  
+**Posible error**: COBOL generalmente no usa la notación `[:]`, por lo que esta línea podría no funcionar correctamente. Probablemente debería ser:
+```cobol
+       move s-char(3:) to res(1:)
+```
+Para mover la cadena desde la **posición 3 en adelante** de `s-char` a `res`.
+
+```cobol
+       goback.
+```
+Termina el programa y regresa al programa que lo llamó.
+
+---
+
+## Ejemplo de Entrada y Salida
+
+### Entrada (`str`):
+```
+s-length = 10
+s-char   = "ABCDEFGHIJ"
+```
+### Proceso:
+- Se eliminan los dos primeros caracteres: `"ABCDEFGHIJ"` → `"CDEFGHIJ"`
+- Nueva longitud: `10 - 2 = 8`
+
+### Salida (`result`):
+```
+res-length = 8
+res        = "CDEFGHIJ"
+```
+
+---
+
+## Resumen
+✅ **Elimina los dos primeros caracteres de una cadena y devuelve el resultado.**  
+❌ **Posible error en la sintaxis de la operación `move`**.  
+Si necesitas ayuda para corregirlo o adaptarlo, avísame. 😊
+
+

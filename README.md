@@ -2,17 +2,17 @@
 Programa Caracteres Duplicados
 Este código en COBOL define un programa llamado Doublechar, que toma una cadena de entrada (s) y devuelve otra (result) en la que cada carácter se repite dos veces.
 
-👉 IDENTIFICATION DIVISION
-
+## IDENTIFICATION DIVISION
+```cobol
 IDENTIFICATION DIVISION.
 PROGRAM-ID. Doublechar.
 
 Define el nombre del programa como Doublechar.
 
-👉 DATA DIVISION
+## DATA DIVISION
 
 La DATA DIVISION contiene la estructura de los datos usados en el programa.
-
+```cobol
 LINKAGE SECTION.
 01  s.
     03  sLen         PIC 9(2).
@@ -23,11 +23,11 @@ LINKAGE SECTION.
     03  resChar      PIC X
         OCCURS 0 TO 60 TIMES DEPENDING ON resLen.
 
-👉 Explicación de la LINKAGE SECTION
+## Explicación de la LINKAGE SECTION
 
 La LINKAGE SECTION se usa cuando el programa recibe datos externos, por ejemplo, desde otro programa o subprograma.
 
-👉 Estructura de s (entrada)
+## Estructura de s (entrada)
 
 sLen: Guarda la longitud de la cadena original (s).
 
@@ -35,13 +35,13 @@ sChar: Es un array de caracteres que puede contener hasta 30 caracteres, dependi
 
 INDEXED i: Permite usar i como índice en los bucles.
 
-👉 Estructura de result (salida)
+## Estructura de result (salida)
 
 resLen: Guarda la longitud de la nueva cadena (el doble de sLen).
 
 resChar: Es un array que almacena la nueva cadena con caracteres duplicados, de hasta 60 caracteres (2 * sLen).
 
-👉 PROCEDURE DIVISION
+## PROCEDURE DIVISION
 
 PROCEDURE DIVISION USING s result.
 
@@ -60,7 +60,7 @@ Muestra el tamaño original de sLen.
 Calcula la nueva longitud duplicándola (resLen = sLen * 2).
 
 Muestra la nueva longitud (resLen).
-
+```cobol
 PERFORM VARYING i FROM 1 UNTIL i > sLen
     MOVE sChar(i) TO resChar(2 * i - 1) resChar(2 * i)
 END-PERFORM.
@@ -77,7 +77,7 @@ GOBACK.
 
 Finaliza la ejecución y devuelve el control al programa que lo llamó.
 
-👉 Ejemplo de Ejecución
+## Ejemplo de Ejecución
 
 Entrada (s):
 
@@ -95,9 +95,8 @@ Salida (result):
 resLen = 10
 resChar = "HHeelllloo"
 
-👉 Conclusión
+## Conclusión
 
-👉 Este programa duplica cada carácter de una cadena y la almacena en otra variable.👉 Está diseñado para ser llamado desde otro programa, gracias a la LINKAGE SECTION.👉 Usa arrays dinámicos con OCCURS ... DEPENDING ON.👉 Eficiente y claro, usando PERFORM VARYING para recorrer la cadena.
 
 Entrada (s):
 
@@ -114,10 +113,6 @@ Salida (result):
 
 resLen = 10
 resChar = "HHeelllloo"
-
-👉 Conclusión
-
-👉 Este programa duplica cada carácter de una cadena y la almacena en otra variable.👉 Está diseñado para ser llamado desde otro programa, gracias a la LINKAGE SECTION.👉 Usa arrays dinámicos con OCCURS ... DEPENDING ON.👉 Eficiente y claro, usando PERFORM VARYING para recorrer la cadena.
 
 
 
